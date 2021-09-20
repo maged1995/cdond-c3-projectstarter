@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   slack: circleci/slack@4.4.4
+  jq: circleci/jq@2.2.0
 
 commands:
   destroy-environment:
@@ -161,6 +162,7 @@ jobs:
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:Name,Values=udapeople" \
               --output text >> project/.circleci/ansible/inventory.txt
+      - jq/install
       - persist_to_workspace:
           root: ~/
           paths:

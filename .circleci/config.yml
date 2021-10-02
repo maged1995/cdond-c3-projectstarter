@@ -162,7 +162,7 @@ jobs:
       - run:
           name: install tar utility
           command: |
-            sudo apt install tar
+            apt install tar
       - run:
           name: Add back-end ip to ansible inventory
           command: |

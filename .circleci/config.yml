@@ -83,6 +83,7 @@ jobs:
   test-frontend:
     docker:
       - image: circleci/node:13.8.0
+    resource_class: large
     steps:
       - checkout
       - restore_cache:

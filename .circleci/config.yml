@@ -165,7 +165,7 @@ jobs:
             aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:Name,Values=udapeople" \
-              --output text >> project/.circleci/ansible/inventory.txt
+              --output text >> .circleci/ansible/inventory.txt
       - jq/install
       - persist_to_workspace:
           root: ~/

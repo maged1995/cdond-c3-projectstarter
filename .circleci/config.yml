@@ -160,6 +160,10 @@ jobs:
               --stack-name "front-end-stack-${CIRCLE_WORKFLOW_ID}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID}"
       - run:
+          name: install tar utility
+          command: |
+            sudo apt install tar
+      - run:
           name: Add back-end ip to ansible inventory
           command: |
             aws ec2 describe-instances \

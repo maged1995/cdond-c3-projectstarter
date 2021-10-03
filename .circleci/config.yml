@@ -240,7 +240,7 @@ jobs:
       - run:
           name: Get backend url
           command: |
-            BACKEND_IP=$( tail -n 1 inventory.txt )
+            BACKEND_IP=$( tail -n 2 inventory.txt )
             export API_URL="http://${BACKEND_IP}:3030"
       - run:
           name: Deploy frontend objects
@@ -248,11 +248,7 @@ jobs:
             cd frontend
             npm run build
             aws s3 cp ./dist/ "s3://udapeople-${CIRCLE_WORKFLOW_ID}/
-      - run:
-          name: install curl for failure
-          when: on_fail
-          command: |
-            apk --no-cache add curl jq
+      - jq/install
       - revert-migrations
 
   deploy-backend:
@@ -275,7 +271,7 @@ jobs:
       - run:
           name: Deploy backend
           command: |
-            ansible-playbook ansible/deploy-backend.yml -i inventory.txt
+            ansible-playbook .circleci/ansible/deploy-backend.yml -i inventory.txt
       - run:
           name: install curl for failure
           when: on_fail

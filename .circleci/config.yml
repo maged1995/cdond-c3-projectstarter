@@ -231,12 +231,12 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
-      - attach_workspace:
-          at: ~/
       - run:
           name: install tar utility
           command: |
             yum install -y tar gzip
+      - attach_workspace:
+          at: ~/
       - run:
           name: Get backend url
           command: |
@@ -277,6 +277,8 @@ jobs:
       - run:
           name: Deploy backend
           command: |
+            pwd
+            ls
             ansible-playbook .circleci/ansible/deploy-backend.yml -i ~/project/inventory.txt
       - run:
           name: install curl for failure

@@ -240,6 +240,8 @@ jobs:
       - run:
           name: Get backend url
           command: |
+            ls
+            pwd
             BACKEND_IP=$( tail -n 2 ~/project/inventory.txt )
             export API_URL="http://${BACKEND_IP}:3030"
       - run:
@@ -259,6 +261,10 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "19:5e:2d:59:98:03:de:fa:72:a3:c8:c0:58:4f:c5:e5"
+      - run:
+          name: install tar utility & gzip
+          command: |
+            apk --no-cache add tar gzip
       - attach_workspace:
           at: ~/
       - run:

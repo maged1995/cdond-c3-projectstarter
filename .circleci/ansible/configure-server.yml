@@ -9,7 +9,7 @@
     - ansible_stdout_callback: yaml
 
   pre_tasks:
-    - amazon.aws.ec2:
+    - ec2:
         key_name: udacity
         instance_type: t2.micro
         image: ami-068663a3c619dd892

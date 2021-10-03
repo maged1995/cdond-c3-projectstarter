@@ -194,12 +194,11 @@ jobs:
       - run:
           name: Configure server
           command: |
-            pwd
             ansible-playbook .circleci/ansible/configure-server.yml -i inventory.txt
       - persist_to_workspace:
           root: ~/
           paths:
-            - ~/project/inventory.txt
+            - /home/project/inventory.txt
       - run:
           name: install curl for failure
           when: on_fail

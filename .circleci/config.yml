@@ -240,9 +240,8 @@ jobs:
       - run:
           name: Get backend url
           command: |
-            ls
-            pwd
-            BACKEND_IP=$( tail -n 2 ~/project/inventory.txt )
+            ls ..
+            BACKEND_IP=$( tail -n 2 ~/inventory.txt )
             export API_URL="http://${BACKEND_IP}:3030"
       - run:
           name: Deploy frontend objects
@@ -277,8 +276,7 @@ jobs:
       - run:
           name: Deploy backend
           command: |
-            pwd
-            ls
+            ls ..
             ansible-playbook .circleci/ansible/deploy-backend.yml -i ~/project/inventory.txt
       - run:
           name: install curl for failure

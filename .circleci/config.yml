@@ -196,16 +196,15 @@ jobs:
           command: |
             pwd
             ansible-playbook .circleci/ansible/configure-server.yml -i inventory.txt
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - ~/project/inventory.txt
       - run:
           name: install curl for failure
           when: on_fail
           command: |
             apk --no-cache add curl jq
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project/inventory.txt
-      - jq/install
       - revert-migrations
 
   run-migrations:

@@ -207,6 +207,8 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
+      - restore_cache:
+          keys: [back_end-build]
       - run:
           name: Run migrations
           command: |

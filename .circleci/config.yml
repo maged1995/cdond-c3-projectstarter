@@ -203,7 +203,8 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - inventory.txt
+            - project/inventory.txt
+      - jq/install
       - revert-migrations
 
   run-migrations:

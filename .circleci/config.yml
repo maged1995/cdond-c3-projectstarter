@@ -269,6 +269,7 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update ansible # install the dependencies needed for your playbook
+            apk add --update npm
       - restore_cache:
           keys: [back_end-build]
       - run:

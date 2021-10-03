@@ -200,6 +200,10 @@ jobs:
           when: on_fail
           command: |
             apk --no-cache add curl jq
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - inventory.txt
       - revert-migrations
 
   run-migrations:
@@ -249,6 +253,10 @@ jobs:
             npm run build
             aws s3 cp ./dist/ "s3://udapeople-${CIRCLE_WORKFLOW_ID}/
       - jq/install
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - inventory.txt
       - revert-migrations
 
   deploy-backend:
@@ -277,6 +285,10 @@ jobs:
           when: on_fail
           command: |
             apk --no-cache add curl jq
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - inventory.txt
       - revert-migrations
 
   smoke-test:

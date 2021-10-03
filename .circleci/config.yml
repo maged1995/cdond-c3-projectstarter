@@ -231,6 +231,10 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
+      - run:
+          name: install tar utility
+          command: |
+            yum install -y tar gzip
       - attach_workspace:
           at: ~/
       - run:
@@ -244,6 +248,11 @@ jobs:
             cd frontend
             npm run build
             aws s3 cp ./dist/ "s3://udapeople-${CIRCLE_WORKFLOW_ID}/
+      - run:
+          name: install curl for failure
+          when: on_fail
+          command: |
+            apk --no-cache add curl jq
       - revert-migrations
 
   deploy-backend:
@@ -256,12 +265,21 @@ jobs:
             - "19:5e:2d:59:98:03:de:fa:72:a3:c8:c0:58:4f:c5:e5"
       - attach_workspace:
           at: ~/
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update ansible # install the dependencies needed for your playbook
       - restore_cache:
           keys: [back_end-build]
       - run:
           name: Deploy backend
           command: |
             ansible-playbook ansible/deploy-backend.yml -i inventory.txt
+      - run:
+          name: install curl for failure
+          when: on_fail
+          command: |
+            apk --no-cache add curl jq
       - revert-migrations
 
   smoke-test:

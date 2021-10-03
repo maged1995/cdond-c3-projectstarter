@@ -195,6 +195,11 @@ jobs:
           name: Configure server
           command: |
             ansible-playbook ansible/configure-server.yml -i inventory.txt
+      - run:
+          name: install curl for failure
+          when: on_fail
+          command: |
+            apk --no-cache add curl
       - revert-migrations
 
   run-migrations:

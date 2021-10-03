@@ -162,7 +162,7 @@ jobs:
       - run:
           name: install tar utility
           command: |
-            yum install tar
+            yum install -y tar
       - run:
           name: Add back-end ip to ansible inventory
           command: |

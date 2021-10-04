@@ -242,7 +242,6 @@ jobs:
       - run:
           name: Get backend url
           command: |
-            ls ..
             BACKEND_IP=$( tail -n 2 ~/project/.circleci/ansible/inventory.txt )
             export API_URL="http://${BACKEND_IP}:3030"
       - run:
@@ -252,7 +251,7 @@ jobs:
             cp .env.sample .env
             npm install
             npm run build
-            aws s3 cp ./dist/ "s3://udapeople-${CIRCLE_WORKFLOW_ID}/
+            aws s3 cp ./dist/ "s3://udapeople-${CIRCLE_WORKFLOW_ID}/"
       - jq/install
       - revert-migrations
 

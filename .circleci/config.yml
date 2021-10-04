@@ -235,6 +235,11 @@ jobs:
           name: install dependencies
           command: |
             yum install -y tar gzip nodejs npm
+            ln -s /usr/local/bin/node /usr/bin/node
+            ln -s /usr/local/lib/node /usr/lib/node
+            ln -s /usr/local/bin/npm /usr/bin/npm
+            ln -s /usr/local/bin/node-waf /usr/bin/node-waf
+
       - attach_workspace:
           at: ~/
       - run:

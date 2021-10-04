@@ -234,11 +234,9 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            yum install -y tar gzip nodejs npm
-            ln -s /usr/local/bin/node /usr/bin/node
-            ln -s /usr/local/lib/node /usr/lib/node
-            ln -s /usr/local/bin/npm /usr/bin/npm
-            ln -s /usr/local/bin/node-waf /usr/bin/node-waf
+            yum install -y tar gzip
+            curl -sL https://rpm.nodesource.com/setup_14.x | bash -
+            yum install -y nodejs
 
       - attach_workspace:
           at: ~/

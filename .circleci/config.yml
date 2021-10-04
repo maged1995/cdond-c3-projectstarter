@@ -290,7 +290,7 @@ jobs:
 
   smoke-test:
     docker:
-      - image: ubuntu-2004:202010-01
+      - image: ubuntu-20.04
     steps:
       - checkout
       - attach_workspace:

@@ -1,13 +1,8 @@
 ---
-- ec2:
-    region: us-east-1
-    key_name: udacity
-    instance_type: t2.micro
-    image: ami-068663a3c619dd892
-    wait: yes
-    wait_timeout: 600
-    count: 3
-    assign_public_ip: yes
+- name: "update apt packages."
+  become: yes
+  apt:
+    update_cache: yes
 
 - name: Copying the Directory's contents (sub directories/files)
   become: true

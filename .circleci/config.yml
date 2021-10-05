@@ -298,7 +298,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apt-get update; apt-get install curl
+            apt-get update; apt-get install -y curl
       - run:
           name: Get backend url
           command: |

@@ -12,3 +12,6 @@
     owner: apache
     group: apache
     mode: 0644
+
+- name: Start pm2
+  command: pm2 start main.js

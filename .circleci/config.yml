@@ -244,6 +244,7 @@ jobs:
           command: |
             BACKEND_IP=$( tail -n 2 ~/project/.circleci/ansible/inventory.txt )
             export API_URL="http://${BACKEND_IP}:3030"
+            echo $API_URL
       - run:
           name: Deploy frontend objects
           command: |
@@ -338,7 +339,11 @@ jobs:
       - run:
           name: Update cloudfront distribution
           command: |
-            # your code here
+            aws cloudformation deploy \
+              --template-file .circleci/files/cloudfront.yml \
+              --tags project=udapeople \
+              --stack-name udapeople-cloudfront \
+              --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}"
       - revert-migrations
 
   cleanup:

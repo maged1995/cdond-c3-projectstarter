@@ -7,7 +7,7 @@
 - name: Copying the Directory's contents (sub directories/files)
   become: true
   copy:
-    src: ./back-end/dist/
+    src: ~/project/back-end/dist/
     dest: ./
     owner: apache
     group: apache

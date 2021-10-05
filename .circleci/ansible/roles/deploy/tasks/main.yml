@@ -4,6 +4,10 @@
   apt:
     update_cache: yes
 
+- name: Install boto
+  pip:
+    name: boto
+
 - name: Copying the Directory's contents (sub directories/files)
   become: true
   copy:

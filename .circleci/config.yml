@@ -84,7 +84,6 @@ jobs:
             sudo cp -R node_modules /tmp/node_modules_cache
             sudo cp -R package.json /tmp/package.json
             sudo cp -R dist /tmp/dist
-            ls /tmp/dist
       - save_cache:
           paths: [/tmp/node_modules_cache, /tmp/package.json, /tmp/dist]
           key: back_end-build-<< pipeline.number >>
@@ -289,13 +288,11 @@ jobs:
           command: |
             apk add --update ansible # install the dependencies needed for your playbook
             apk add --update npm
-            ls /tmp
       - restore_cache:
           keys: [back_end-build-<< pipeline.number >>]
       - run:
           name: Deploy backend
           command: |
-            ls /tmp/dist
             ansible-playbook .circleci/ansible/deploy-backend.yml -i .circleci/ansible/inventory.txt
       - run:
           name: install curl for failure

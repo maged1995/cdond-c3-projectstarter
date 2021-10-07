@@ -294,7 +294,7 @@ jobs:
       - run:
           name: Deploy backend
           command: |
-            ls ..
+            ls /tmp
             ansible-playbook .circleci/ansible/deploy-backend.yml -i .circleci/ansible/inventory.txt
       - run:
           name: install curl for failure

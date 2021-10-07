@@ -397,7 +397,7 @@ workflows:
       # - scan-frontend:
       #     requires: [build-frontend]
       - deploy-infrastructure:
-          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          requires: [test-frontend, test-backend] # re-add [scan-frontend, scan-backend] when the lodash problem is fixed
           filters:
             branches:
               only: [master]

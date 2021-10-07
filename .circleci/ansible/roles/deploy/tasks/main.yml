@@ -8,7 +8,7 @@
   become: true
   copy:
     remote_src: true
-    src: /tmp/dist
+    src: /tmp/dist/
     dest: .
     owner: apache
     group: apache

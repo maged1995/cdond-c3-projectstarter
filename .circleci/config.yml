@@ -84,6 +84,7 @@ jobs:
             sudo cp -R node_modules /tmp/node_modules_cache
             sudo cp -R package.json /tmp/package.json
             sudo cp -R dist /tmp/dist
+            ls /tmp/dist
       - save_cache:
           paths: [/tmp/node_modules_cache, /tmp/package.json, /tmp/dist]
           key: back_end-build-<< pipeline.number >>
@@ -288,7 +289,7 @@ jobs:
           command: |
             apk add --update ansible # install the dependencies needed for your playbook
             apk add --update npm
-            ls /tmp
+            ls /tmp/dist
       - restore_cache:
           keys: [back_end-build-<< pipeline.number >>]
       - run:

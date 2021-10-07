@@ -81,17 +81,9 @@ jobs:
             cd backend
             npm install
             npm run build
-
-            cp -R node_modules /home/node_modules
-            cp -R package.json /home/package.json
-            cp -R dist /home/dist
       - save_cache:
           paths:
-            [
-              /home/backend/node_modules,
-              /home/backend/package.json,
-              /home/backend/dist,
-            ]
+            [~/backend/node_modules, ~/backend/package.json, ~/backend/dist]
           key: back_end-build-<< pipeline.number >>
 
   test-frontend:
@@ -119,9 +111,6 @@ jobs:
           name: backend tests
           command: |
             cd backend
-            cp -R /home/node_modules ./node_modules
-            cp -R /home/package.json ./package.json
-            cp -R /home/dist ./dist
             npm run test
 
   scan-frontend:
@@ -148,9 +137,6 @@ jobs:
           name: Backend scan
           command: |
             cd backend
-            cp -R /home/node_modules ./node_modules
-            cp -R /home/package.json ./package.json
-            cp -R /home/dist ./dist
             npm audit --audit-level=critical
 
   deploy-infrastructure:
@@ -229,9 +215,6 @@ jobs:
           name: Run migrations
           command: |
             cd backend
-            cp -R /home/node_modules ./node_modules
-            cp -R /home/package.json ./package.json
-            cp -R /home/dist ./dist
             npm run premigrations
             if npm run migrations && ! grep "has been executed successfully"; then
               exit 1
@@ -294,11 +277,13 @@ jobs:
           command: |
             apk add --update ansible # install the dependencies needed for your playbook
             apk add --update npm
+            ls backend
       - restore_cache:
           keys: [back_end-build-<< pipeline.number >>]
       - run:
           name: Deploy backend
           command: |
+            ls backend
             ansible-playbook .circleci/ansible/deploy-backend.yml -i .circleci/ansible/inventory.txt
       - run:
           name: install curl for failure

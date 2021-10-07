@@ -318,7 +318,10 @@ jobs:
             BACKEND_IP=$( cat ~/project/.circleci/ansible/inventory.txt | tail -1 )
             pwd
             echo $BACKEND_IP
-            echo 'export API_URL="http://${BACKEND_IP}:3030"' >> $BASH_ENV
+            API_URL_STRING="http://${BACKEND_IP}:3030"
+            echo API_URL_STRING
+            echo 'export API_URL=$API_URL_STRING' >> $BASH_ENV
+            echo $API_URL
             source $BASH_ENV
       - run:
           name: Backend smoke test.

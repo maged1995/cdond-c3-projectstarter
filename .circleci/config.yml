@@ -288,7 +288,7 @@ jobs:
           command: |
             apk add --update ansible # install the dependencies needed for your playbook
             apk add --update npm
-            ls ..
+            ls /tmp
       - restore_cache:
           keys: [back_end-build-<< pipeline.number >>]
       - run:

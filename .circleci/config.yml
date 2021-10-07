@@ -81,6 +81,7 @@ jobs:
             cd backend
             npm install
             npm run build
+            ls
       - save_cache:
           paths: [backend/node_modules, backend/package.json, backend/dist]
           key: back_end-build-<< pipeline.number >>
@@ -276,13 +277,11 @@ jobs:
           command: |
             apk add --update ansible # install the dependencies needed for your playbook
             apk add --update npm
-            ls ../..
       - restore_cache:
           keys: [back_end-build-<< pipeline.number >>]
       - run:
           name: Deploy backend
           command: |
-            ls ../..
             ansible-playbook .circleci/ansible/deploy-backend.yml -i .circleci/ansible/inventory.txt
       - run:
           name: install curl for failure

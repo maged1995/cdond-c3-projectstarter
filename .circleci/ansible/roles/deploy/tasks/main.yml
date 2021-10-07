@@ -8,7 +8,7 @@
   become: true
   copy:
     remote_src: true
-    src: /home/dist/
+    src: ~/backend/dist dist
     dest: .
     owner: apache
     group: apache

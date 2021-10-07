@@ -56,7 +56,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [frontend-build]
+          keys: [frontend-build-<< pipeline.number >>]
       - run:
           name: Build front-end
           command: |
@@ -66,7 +66,7 @@ jobs:
             npm run build
       - save_cache:
           paths: [frontend/node_modules, frontend/package.json]
-          key: frontend-build
+          key: frontend-build-<< pipeline.number >>
 
   build-backend:
     docker:
@@ -81,11 +81,11 @@ jobs:
             cd backend
             npm install
             npm run build
-            sudo cp -R node_modules /home/node_modules_cache
-            sudo cp -R package.json /home/package.json
-            sudo cp -R dist /home/dist
+            sudo cp -R node_modules /tmp/node_modules_cache
+            sudo cp -R package.json /tmp/package.json
+            sudo cp -R dist /tmp/dist
       - save_cache:
-          paths: [/home/node_modules_cache, /home/package.json, /home/dist]
+          paths: [/tmp/node_modules_cache, /tmp/package.json, /tmp/dist]
           key: back_end-build-<< pipeline.number >>
 
   test-frontend:
@@ -95,7 +95,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [frontend-build]
+          keys: [frontend-build-<< pipeline.number >>]
       - run:
           name: frontend tests
           command: |
@@ -113,9 +113,9 @@ jobs:
           name: backend tests
           command: |
             cd backend
-            cp -R /home/node_modules_cache node_modules
-            cp -R /home/package.json package.json
-            cp -R /home/dist dist
+            cp -R /tmp/node_modules_cache node_modules
+            cp -R /tmp/package.json package.json
+            cp -R /tmp/dist dist
             npm run test
 
   scan-frontend:
@@ -124,7 +124,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [frontend-build]
+          keys: [frontend-build-<< pipeline.number >>]
       - run:
           name: front-end scan
           command: |
@@ -142,9 +142,9 @@ jobs:
           name: Backend scan
           command: |
             cd backend
-            cp -R /home/node_modules_cache node_modules
-            cp -R /home/package.json package.json
-            cp -R /home/dist dist
+            cp -R /tmp/node_modules_cache node_modules
+            cp -R /tmp/package.json package.json
+            cp -R /tmp/dist dist
             npm audit --audit-level=critical
 
   deploy-infrastructure:
@@ -223,9 +223,9 @@ jobs:
           name: Run migrations
           command: |
             cd backend
-            cp -R /usr/local/lib/node_modules_cache node_modules
-            cp -R /usr/local/lib/package.json package.json
-            cp -R /usr/local/lib/dist dist
+            cp -R /tmp/node_modules_cache node_modules
+            cp -R /tmp/package.json package.json
+            cp -R /tmp/dist dist
             npm run premigrations
             if npm run migrations && ! grep "has been executed successfully"; then
               exit 1

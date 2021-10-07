@@ -81,11 +81,17 @@ jobs:
             cd backend
             npm install
             npm run build
-            ls
-            pwd
+
+            cp -R node_modules /home/node_modules
+            cp -R package.json /home/package.json
+            cp -R dist /home/dist
       - save_cache:
           paths:
-            [~/backend/node_modules, ~/backend/package.json, ~/backend/dist]
+            [
+              /home/backend/node_modules,
+              /home/backend/package.json,
+              /home/backend/dist,
+            ]
           key: back_end-build-<< pipeline.number >>
 
   test-frontend:
@@ -113,6 +119,9 @@ jobs:
           name: backend tests
           command: |
             cd backend
+            cp -R /home/node_modules ./node_modules
+            cp -R /home/package.json ./package.json
+            cp -R /home/dist ./dist
             npm run test
 
   scan-frontend:
@@ -139,6 +148,9 @@ jobs:
           name: Backend scan
           command: |
             cd backend
+            cp -R /home/node_modules ./node_modules
+            cp -R /home/package.json ./package.json
+            cp -R /home/dist ./dist
             npm audit --audit-level=critical
 
   deploy-infrastructure:
@@ -217,6 +229,9 @@ jobs:
           name: Run migrations
           command: |
             cd backend
+            cp -R /home/node_modules ./node_modules
+            cp -R /home/package.json ./package.json
+            cp -R /home/dist ./dist
             npm run premigrations
             if npm run migrations && ! grep "has been executed successfully"; then
               exit 1

@@ -8,7 +8,7 @@
   become: true
   copy:
     remote_src: true
-    src: /home/circleci/project/backend/dist
+    src: ~/project/backend/dist/
     dest: .
     owner: apache
     group: apache

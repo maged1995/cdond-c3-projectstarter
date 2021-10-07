@@ -81,15 +81,15 @@ jobs:
             cd backend
             npm install
             npm run build
-            sudo cp -R node_modules /usr/local/lib/node_modules_cache
-            sudo cp -R package.json /usr/local/lib/package.json
-            sudo cp -R dist /usr/local/lib/dist
+            sudo cp -R node_modules ~/usr/local/lib/node_modules_cache
+            sudo cp -R package.json ~/usr/local/lib/package.json
+            sudo cp -R dist ~/usr/local/lib/dist
       - save_cache:
           paths:
             [
-              /usr/local/lib/node_modules_cache,
-              /usr/local/lib/package.json,
-              /usr/local/lib/dist,
+              ~/usr/local/lib/node_modules_cache,
+              ~/usr/local/lib/package.json,
+              ~/usr/local/lib/dist,
             ]
           key: back_end-build-<< pipeline.number >>
 
@@ -118,9 +118,9 @@ jobs:
           name: backend tests
           command: |
             cd backend
-            cp -R /usr/local/lib/node_modules_cache node_modules
-            cp -R /usr/local/lib/package.json package.json
-            cp -R /usr/local/lib/dist dist
+            cp -R ~/usr/local/lib/node_modules_cache node_modules
+            cp -R ~/usr/local/lib/package.json package.json
+            cp -R ~/usr/local/lib/dist dist
             npm run test
 
   scan-frontend:
@@ -147,9 +147,9 @@ jobs:
           name: Backend scan
           command: |
             cd backend
-            cp -R /usr/local/lib/node_modules_cache node_modules
-            cp -R /usr/local/lib/package.json package.json
-            cp -R /usr/local/lib/dist dist
+            cp -R ~/usr/local/lib/node_modules_cache node_modules
+            cp -R ~/usr/local/lib/package.json package.json
+            cp -R ~/usr/local/lib/dist dist
             npm audit --audit-level=critical
 
   deploy-infrastructure:

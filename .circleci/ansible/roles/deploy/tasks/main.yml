@@ -8,7 +8,7 @@
   become: true
   copy:
     remote_src: true
-    src: /usr/local/lib/dist
+    src: ~/usr/local/lib/dist
     dest: .
     owner: apache
     group: apache

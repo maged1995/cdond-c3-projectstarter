@@ -82,6 +82,7 @@ jobs:
             npm install
             npm run build
             ls
+            pwd
       - save_cache:
           paths: [backend/node_modules, backend/package.json, backend/dist]
           key: back_end-build-<< pipeline.number >>

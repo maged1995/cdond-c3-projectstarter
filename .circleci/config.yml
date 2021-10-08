@@ -320,10 +320,12 @@ jobs:
             echo $BACKEND_IP
             API_URL_STRING="http://${BACKEND_IP}:3030"
             echo $API_URL_STRING
-            echo 'export API_URL=$API_URL_STRING' >> $BASH_ENV
+            'export API_URL=$API_URL_STRING' >> $BASH_ENV
+            echo $BASH_ENV
       - run:
           name: Backend smoke test.
           command: |
+            echo $BASH_ENV
             source $BASH_ENV
             echo $API_URL
             if curl -s $API_URL

@@ -316,25 +316,17 @@ jobs:
           name: Get backend url
           command: |
             BACKEND_IP=$( cat ~/project/.circleci/ansible/inventory.txt | tail -1 )
-            pwd
-            echo $BACKEND_IP
             API_URL_STRING="http://${BACKEND_IP}:3030"
-            echo $API_URL_STRING
             echo "export API_URL=${API_URL_STRING}" >> $BASH_ENV
-            echo $BASH_ENV
-            cat $BASH_ENV
       - run:
           name: Backend smoke test.
           command: |
-            echo $BASH_ENV
-            cat $BASH_ENV
             source $BASH_ENV
-            echo $API_URL
             if curl -s $API_URL
             then
-              return 1
+              exit 1
             else
-              return 0
+              exit 0
             fi
       - run:
           name: Frontend smoke test.
@@ -342,9 +334,9 @@ jobs:
             URL="http://udapeople-${CIRCLE_WORKFLOW_ID}.s3-website-us-east-1.amazonaws.com"
             if curl -s ${URL} | grep "Welcome"
             then
-              return 1
+              exit 1
             else
-              return 0
+              exit 0
             fi
       - jq/install
       - revert-migrations

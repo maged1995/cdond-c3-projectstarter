@@ -358,7 +358,7 @@ jobs:
               --template-file .circleci/files/cloudfront.yml \
               --tags project=udapeople \
               --stack-name udapeople-cloudfront \
-              --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}"
+              --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID}"
       - revert-migrations
 
   cleanup:
@@ -381,7 +381,7 @@ jobs:
             then
               aws cloudformation delete-stack --stack-name "back-end-stack-${OldWorkflowID}"
               aws cloudformation delete-stack --stack-name "front-end-stack-${OldWorkflowID}"
-              aws s3 rm s3://udapeople-$(OldWorkflowID) --recursive
+              aws s3 rm s3://udapeople-${OldWorkflowID} --recursive
             fi
 
 workflows:

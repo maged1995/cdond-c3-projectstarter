@@ -81,6 +81,7 @@ jobs:
             cd backend
             npm install
             npm run build
+            cp .env.sample dist/.env
             sudo cp -R node_modules /tmp/node_modules_cache
             sudo cp -R package.json /tmp/package.json
             sudo cp -R dist /tmp/dist
@@ -334,9 +335,9 @@ jobs:
             URL="http://udapeople-${CIRCLE_WORKFLOW_ID}.s3-website-us-east-1.amazonaws.com"
             if curl -s ${URL} | grep "Welcome"
             then
-              exit 1
-            else
               exit 0
+            else
+              exit 1
             fi
       - jq/install
       - revert-migrations

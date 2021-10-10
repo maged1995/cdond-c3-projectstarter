@@ -286,6 +286,7 @@ jobs:
           command: |
             apk add --update ansible # install the dependencies needed for your playbook
             apk add --update npm
+            pip install awscli
       - restore_cache:
           keys: [back_end-build-<< pipeline.number >>]
       - run:
@@ -310,7 +311,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apt-get update; apt-get install -y curl
+            apt-get update; apt-get install -y curl awscli
       - run:
           name: Get backend url
           command: |

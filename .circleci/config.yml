@@ -114,7 +114,6 @@ jobs:
           command: |
             cd backend
             cp -R /tmp/node_modules_cache node_modules
-            cp -R /tmp/package.json package.json
             cp -R /tmp/dist dist
             npm run test
 
@@ -143,7 +142,6 @@ jobs:
           command: |
             cd backend
             cp -R /tmp/node_modules_cache node_modules
-            cp -R /tmp/package.json package.json
             cp -R /tmp/dist dist
             npm audit --audit-level=critical
 
@@ -224,7 +222,6 @@ jobs:
           command: |
             cd backend
             cp -R /tmp/node_modules_cache node_modules
-            cp -R /tmp/package.json package.json
             cp -R /tmp/dist dist
             npm run premigrations
             if npm run migrations && ! grep "has been executed successfully"; then

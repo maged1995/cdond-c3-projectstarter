@@ -374,9 +374,11 @@ jobs:
                 --no-paginate --output text)
             export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
                 --stack-status-filter CREATE_COMPLETE --no-paginate --output text))
+            echo "export OldWorkflowID=${OldWorkflowID}" >> $BASH_ENV
       - run:
           name: Remove old stacks and files
           command: |
+            source $BASH_ENV
             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             then
               aws cloudformation delete-stack --stack-name "back-end-stack-${OldWorkflowID}"

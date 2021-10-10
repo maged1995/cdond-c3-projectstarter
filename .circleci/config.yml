@@ -83,10 +83,9 @@ jobs:
             npm run build
             cp .env.sample dist/.env
             sudo cp -R node_modules /tmp/node_modules_cache
-            sudo cp -R package.json /tmp/package.json
             sudo cp -R dist /tmp/dist
       - save_cache:
-          paths: [/tmp/node_modules_cache, /tmp/package.json, /tmp/dist]
+          paths: [/tmp/node_modules_cache, /tmp/dist]
           key: back_end-build-<< pipeline.number >>
 
   test-frontend:

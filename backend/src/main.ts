@@ -9,15 +9,20 @@ import * as cors from 'cors';
 import { TransformInterceptor } from './modules/common/interceptors/TransformInterceptor';
 import * as express from 'express';
 import { ErrorFilter } from './modules/errors/error.filter';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
   const logger = new AppLogger();
   logger.info(`NodeJs Version ${process.version}`);
   logger.info(JSON.stringify(process.env));
   const server = express();
-  const app = await NestFactory.create(AppModule, new ExpressAdapter(server), {
-    logger,
-  });
+  const app = await NestFactory.create<NestExpressApplication>(
+    AppModule,
+    new ExpressAdapter(server),
+    {
+      logger,
+    },
+  );
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
   const apiVersionPrefix: string = process.env.API_VERSION || 'api';
   app.setGlobalPrefix(apiVersionPrefix);
@@ -27,12 +32,12 @@ async function bootstrap() {
     .setDescription('Glee2 API')
     .setVersion('1.0')
     .addTag('customTag')
-    .setBasePath(apiVersionPrefix)
+    .addServer(apiVersionPrefix)
     .addBearerAuth() // here is an intentional compile error. Remove the "x" and the backend should compile.
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup(`api/${apiVersionPrefix}`, app, document);
-  const config: ConfigService = app.get('ConfigService');
+  const config = app.get<ConfigService>(ConfigService);
   const whitelist = config.CORS_WHITELIST;
   const corsOptions = {
     origin(origin, callback) {

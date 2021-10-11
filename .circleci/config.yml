@@ -227,7 +227,7 @@ jobs:
             cp -R dist/.env .env
             npm run premigrations
             npm run migrations
-            if npm run migrations && ! grep "has been executed successfully"; then
+            if npm run migrations && ! grep "has been executed successfully" && ! grep "No migrations are pending"; then
               exit 1
             fi
       - run:

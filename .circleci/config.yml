@@ -225,6 +225,7 @@ jobs:
             cp -R /tmp/node_modules_cache node_modules
             cp -R /tmp/dist dist
             npm run premigrations
+            npm run migrations
             if npm run migrations && ! grep "has been executed successfully"; then
               exit 1
             fi

@@ -178,7 +178,6 @@ jobs:
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID}" \
               --output text >> .circleci/ansible/inventory.txt
-            cat .circleci/ansible/inventory.txt
       - jq/install
       - persist_to_workspace:
           root: ~/
@@ -204,6 +203,7 @@ jobs:
           name: Configure server
           command: |
             ansible-playbook .circleci/ansible/configure-server.yml -i ~/project/.circleci/ansible/inventory.txt
+            ansible-playbook .circleci/ansible/configure-prometheus-node-exporter -i ~/project/.circleci/ansible/inventory.txt
       - run:
           name: install curl for failure
           when: on_fail
@@ -344,7 +344,7 @@ jobs:
           command: |
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
-            sudo ./aws/install
+            ./aws/install
       - jq/install
       - destroy-environment
 

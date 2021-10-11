@@ -11,6 +11,7 @@
     dest: .
 
 - name: Start pm2
+  become: yes
   command: pm2 start main.js
   args:
     executable: /bin/bash

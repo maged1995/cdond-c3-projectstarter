@@ -12,3 +12,5 @@
 
 - name: Start pm2
   command: pm2 start main.js
+  args:
+    executable: /bin/bash

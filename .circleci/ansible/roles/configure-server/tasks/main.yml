@@ -14,17 +14,21 @@
   apt:
     autoremove: yes
 
-- name: "install dependencies."
+- name: nvm
+  shell: >
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+  args:
+    creates: "~/.nvm/nvm.sh"
+
+- name: nvm use
   become: yes
-  apt:
-    name: ["nodejs", "npm"]
-    state: latest
-    update_cache: yes
+  shell: source ~/.nvm/nvm.sh && nvm install 13.8.0
+  args:
+    executable: /bin/bash
 
 - name: "install pm2"
   become: yes
-  npm:
-    name: pm2
-    global: yes
-    production: yes
-    state: latest
+  shell: >
+    source ~/.nvm/nvm.sh && npm install -g pm2
+  args:
+    executable: /bin/bash

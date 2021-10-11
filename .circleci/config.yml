@@ -224,6 +224,7 @@ jobs:
             cd backend
             cp -R /tmp/node_modules_cache node_modules
             cp -R /tmp/dist dist
+            cp -R dist/.env .env
             npm run premigrations
             npm run migrations
             if npm run migrations && ! grep "has been executed successfully"; then

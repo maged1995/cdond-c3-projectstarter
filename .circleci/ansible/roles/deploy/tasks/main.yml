@@ -12,6 +12,6 @@
 
 - name: Start pm2
   become: yes
-  shell: pm2 start main.js
+  shell: source ~/.nvm/nvm.sh && pm2 start main.js
   args:
     executable: /bin/bash

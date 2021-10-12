@@ -15,7 +15,6 @@
   copy:
     src: /tmp/node_modules_cache/
     dest: ./node_modules/
-  timeout: "1200"
 
 - name: Start pm2
   become: yes

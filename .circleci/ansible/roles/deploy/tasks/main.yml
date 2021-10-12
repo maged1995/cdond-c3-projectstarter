@@ -12,6 +12,7 @@
 
 - name: Copying the Directory's modules (sub directories/files)
   become: true
+  async: 2100
   copy:
     src: /tmp/node_modules_cache/
     dest: ./node_modules/

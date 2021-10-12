@@ -294,11 +294,6 @@ jobs:
       - run:
           name: Deploy backend
           command: |
-            cd ./backend
-            cp -R /tmp/node_modules_cache node_modules
-            cp -R /tmp/dist dist
-            cp -R dist/.env .env
-            cd ..
             ansible-playbook .circleci/ansible/deploy-backend.yml -i .circleci/ansible/inventory.txt
       - run:
           name: install curl for failure

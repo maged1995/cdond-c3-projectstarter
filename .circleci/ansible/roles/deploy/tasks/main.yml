@@ -12,10 +12,10 @@
 
 - name: Copying the Directory's modules (sub directories/files)
   become: true
-  timeout: "1200"
   copy:
     src: /tmp/node_modules_cache/
     dest: ./node_modules/
+  timeout: "1200"
 
 - name: Start pm2
   become: yes

@@ -7,7 +7,7 @@
 - name: Copying the Directory's contents (sub directories/files)
   become: true
   copy:
-    src: /tmp/dist/
+    src: ~/backend/
     dest: .
 
 - name: Start pm2

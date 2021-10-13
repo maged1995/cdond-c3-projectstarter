@@ -4,34 +4,36 @@
   apt:
     update_cache: yes
 
-- name: Copying the Directory's contents (sub directories/files)
-  become: true
-  copy:
-    src: /root/project/backend/
-    dest: .
+# - name: Copying the Directory's contents (sub directories/files)
+#   become: true
+#   copy:
+#     src: /home/maged/personal/education/cloudDevOpsEngineer/cdond-c3-projectstarter/backend/
+#     dest: .
 
-- name: install modules
-  become: yes
-  shell: >
+- name: install project
+  shell: |
     source ~/.nvm/nvm.sh
     npm install
   args:
     executable: /bin/bash
-    creates: ~/node_modules
 
-- name: install modules
-  become: yes
-  shell: >
+- name: build
+  shell: |
     source ~/.nvm/nvm.sh
-    npm build
+    npm run build
   args:
     executable: /bin/bash
-    creates: ~/dist
+
+- name: copy .env
+  shell: >
+    cp ~/.env.sample ~/dist/.env
+  args:
+    creates: "~/dist/.env"
 
 - name: Start pm2
-  become: yes
-  shell: >
+  shell: |
     source ~/.nvm/nvm.sh
-    pm2 start dist/main.js
+    cd dist
+    pm2 start main.js
   args:
     executable: /bin/bash

@@ -15,21 +15,25 @@
     autoremove: yes
 
 - name: nvm
-  become: yes
-  shell: >
+  shell: |
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
   args:
     creates: "~/.nvm/nvm.sh"
 
 - name: nvm use
-  become: yes
   shell: source ~/.nvm/nvm.sh && nvm install 13.8.0
   args:
     executable: /bin/bash
 
+- name: Start pm2
+  shell: |
+    source ~/.nvm/nvm.sh
+    nvm install 13.8.0
+  args:
+    executable: /bin/bash
+
 - name: "install pm2"
-  become: yes
-  shell: >
+  shell: |
     source ~/.nvm/nvm.sh && npm install -g pm2
   args:
     executable: /bin/bash

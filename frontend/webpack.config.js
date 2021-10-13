@@ -171,14 +171,11 @@ module.exports = {
     }),
   ],
   devServer: {
-    contentBase: sourcePath,
+    contentBase: path.join(__dirname, 'dist'),
     hot: true,
-    inline: true,
     historyApiFallback: {
       disableDotRule: true,
     },
-    stats: 'minimal',
-    clientLogLevel: 'warning',
   },
   // https://webpack.js.org/configuration/devtool/
   devtool: isProduction ? 'hidden-source-map' : 'inline-source-map',

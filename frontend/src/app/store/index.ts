@@ -12,9 +12,10 @@ export function configureStore(
 ): Store<RootState> {
   let middleware = applyMiddleware(logger, thunk, routerMiddleware(history));
 
-  if (process.env.NODE_ENV !== 'production') {
-    middleware = composeWithDevTools(middleware);
-  }
+  // if (process && process.env.NODE_ENV !== 'production') {
+  // }
+
+  middleware = composeWithDevTools(middleware);
 
   const store = createStore(
     connectRouter(history)(rootReducer) as any,

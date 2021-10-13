@@ -264,9 +264,7 @@ jobs:
             source $BASH_ENV
             cd frontend
 
-            cp .env.sample .env.copy
-            sed '$ d' .env.copy > .env.sample
-            rm -f .env.copy
+            sed '$ d' .env.sample > .env
             echo "API_URL=${API_URL}" >> .env.sample
 
             npm install

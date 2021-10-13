@@ -281,8 +281,6 @@ jobs:
           name: install tar utility & gzip
           command: |
             apk --no-cache add tar gzip
-      - attach_workspace:
-          at: ~/
       - run:
           name: Install dependencies
           command: |

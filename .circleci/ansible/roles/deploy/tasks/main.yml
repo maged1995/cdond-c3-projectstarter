@@ -7,18 +7,15 @@
 - name: Copying the Directory's contents (sub directories/files)
   become: true
   copy:
-    src: /tmp/dist/
-    dest: ./dist/
-
-- name: Copying the Directory's modules (sub directories/files)
-  become: true
-  no_output_timeout: "1200"
-  copy:
-    src: /tmp/node_modules_cache/
-    dest: ./node_modules/
+    src: /root/project/backend/
+    dest: .
 
 - name: Start pm2
   become: yes
-  shell: source ~/.nvm/nvm.sh && pm2 start main.js
+  shell: >
+    source ~/.nvm/nvm.sh
+    npm install
+    npm build
+    pm2 start dist/main.js
   args:
     executable: /bin/bash

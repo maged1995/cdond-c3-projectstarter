@@ -4,11 +4,11 @@
   apt:
     update_cache: yes
 
-# - name: Copying the Directory's contents (sub directories/files)
-#   become: true
-#   copy:
-#     src: /home/maged/personal/education/cloudDevOpsEngineer/cdond-c3-projectstarter/backend/
-#     dest: .
+- name: Copying the Directory's contents (sub directories/files)
+  become: true
+  copy:
+    src: /root/project/backend/
+    dest: .
 
 - name: install project
   shell: |

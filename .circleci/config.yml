@@ -281,14 +281,14 @@ jobs:
           name: install tar utility & gzip
           command: |
             apk --no-cache add tar gzip
+      - attach_workspace:
+          at: ~/
       - run:
           name: Install dependencies
           command: |
             apk add --update ansible # install the dependencies needed for your playbook
             apk add --update npm
             pip install awscli
-      - restore_cache:
-          keys: [back_end-build-<< pipeline.number >>]
       - run:
           name: Deploy backend
           command: |

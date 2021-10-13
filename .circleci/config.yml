@@ -15,8 +15,8 @@ commands:
           when: on_fail
           command: |
             aws cloudformation delete-stack --stack-name "back-end-stack-${CIRCLE_WORKFLOW_ID}"
-            aws cloudformation delete-stack --stack-name "front-end-stack-${CIRCLE_WORKFLOW_ID}"
             aws s3 rm s3://udapeople-${CIRCLE_WORKFLOW_ID} --recursive
+            aws cloudformation delete-stack --stack-name "front-end-stack-${CIRCLE_WORKFLOW_ID}"
       - slack/notify:
           channel: slack-notifications
           event: fail
@@ -257,12 +257,14 @@ jobs:
           command: |
             BACKEND_IP=$( tail -n 2 ~/project/.circleci/ansible/inventory.txt )
             export API_URL="http://${BACKEND_IP}:3030"
-            echo $API_URL
+            echo "export API_URL=${API_URL_STRING}" >> $BASH_ENV
       - run:
           name: Deploy frontend objects
           command: |
+            source $BASH_ENV
             cd frontend
             cp .env.sample .env
+            echo "API_URL=${API_URL}" >> .env
             npm install
             npm run build
             aws s3 cp ./dist/ s3://udapeople-${CIRCLE_WORKFLOW_ID}/ --recursive
@@ -388,8 +390,8 @@ jobs:
             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             then
               aws cloudformation delete-stack --stack-name "back-end-stack-${OldWorkflowID}"
-              aws cloudformation delete-stack --stack-name "front-end-stack-${OldWorkflowID}"
               aws s3 rm s3://udapeople-${OldWorkflowID} --recursive
+              aws cloudformation delete-stack --stack-name "front-end-stack-${OldWorkflowID}"
             fi
 
 workflows:

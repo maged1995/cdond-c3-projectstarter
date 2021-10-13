@@ -10,12 +10,28 @@
     src: /root/project/backend/
     dest: .
 
-- name: Start pm2
+- name: install modules
   become: yes
   shell: >
     source ~/.nvm/nvm.sh
     npm install
+  args:
+    executable: /bin/bash
+    creates: "~/node_modules"
+
+- name: install modules
+  become: yes
+  shell: >
+    source ~/.nvm/nvm.sh
     npm build
+  args:
+    executable: /bin/bash
+    creates: "~/dist"
+
+- name: Start pm2
+  become: yes
+  shell: >
+    source ~/.nvm/nvm.sh
     pm2 start dist/main.js
   args:
     executable: /bin/bash

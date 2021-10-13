@@ -263,8 +263,12 @@ jobs:
           command: |
             source $BASH_ENV
             cd frontend
-            cp .env.sample .env
-            echo "API_URL=${API_URL}" >> .env
+
+            cp .env.sample .env.copy
+            sed '$ d' .env.copy > .env.sample
+            rm -f .env.copy
+            echo "API_URL=${API_URL}" >> .env.sample
+
             npm install
             npm run build
             aws s3 cp ./dist/ s3://udapeople-${CIRCLE_WORKFLOW_ID}/ --recursive

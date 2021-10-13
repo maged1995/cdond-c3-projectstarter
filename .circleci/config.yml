@@ -265,7 +265,7 @@ jobs:
             cd frontend
 
             sed '$ d' .env.sample > .env
-            echo "API_URL=${API_URL}" >> .env.sample
+            echo "API_URL=${API_URL}" >> .env
 
             npm install
             npm run build

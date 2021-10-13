@@ -171,7 +171,7 @@ module.exports = {
     }),
   ],
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    static: './',
     hot: true,
     historyApiFallback: {
       disableDotRule: true,

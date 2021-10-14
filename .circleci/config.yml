@@ -269,6 +269,7 @@ jobs:
 
             npm install
             npm run build
+            mv .env dist/.env
             aws s3 cp ./dist/ s3://udapeople-${CIRCLE_WORKFLOW_ID}/ --recursive
       - jq/install
       - destroy-environment

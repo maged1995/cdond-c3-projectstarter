@@ -255,8 +255,8 @@ jobs:
       - run:
           name: Get backend url
           command: |
-            BACKEND_IP=$( tail -n 2 ~/project/.circleci/ansible/inventory.txt )
-            export API_URL="http://${BACKEND_IP}:3030"
+            BACKEND_IP=$( cat ~/project/.circleci/ansible/inventory.txt | tail -1 )
+            API_URL_STRING="http://${BACKEND_IP}:3030"
             echo "export API_URL=${API_URL_STRING}" >> $BASH_ENV
       - run:
           name: Deploy frontend objects
@@ -265,7 +265,7 @@ jobs:
             npm install webpack-dev-server -g
             cd frontend
 
-            sed '$d' .env.sample > .env
+            sed '$ d' .env.sample > .env
             echo "API_URL=${API_URL}" >> .env
 
             npm install

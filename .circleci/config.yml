@@ -271,7 +271,7 @@ jobs:
             npm install
             npm run build:prod
             mv .env dist/.env
-            cat .env
+            cat dist/.env
             ls -la dist
             aws s3 cp ./dist/ s3://udapeople-${CIRCLE_WORKFLOW_ID}/ --recursive
       - jq/install

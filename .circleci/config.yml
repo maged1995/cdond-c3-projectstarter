@@ -255,9 +255,11 @@ jobs:
       - run:
           name: Get backend url
           command: |
-            BACKEND_IP=$( tail -n 2 ~/project/.circleci/ansible/inventory.txt )
-            export API_URL="http://${BACKEND_IP}:3030"
-            echo "export API_URL=${API_URL_STRING}" >> $BASH_ENV
+            PRIVATE_IP=($(aws ec2 describe-instances \
+              --query 'Reservations[*].Instances[*].PrivateIpAddress' \
+              --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID}"))
+            export API_URL="http://${PRIVATE_IP}:3030"
+            echo "export API_URL=${API_URL}" >> $BASH_ENV
       - run:
           name: Deploy frontend objects
           command: |

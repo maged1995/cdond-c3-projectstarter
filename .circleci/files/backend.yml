@@ -40,7 +40,7 @@ Resources:
         - Key: Name
           Value: !Sub backend-${ID}
 
-outputs:
+Outputs:
   BackendURL:
     Value: !GetAtt EC2Instance.PublicIp
     Description: URL for the backend server

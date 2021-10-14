@@ -268,7 +268,7 @@ jobs:
             echo "API_URL=${API_URL}" >> .env
 
             npm install
-            npm run build
+            npm run build:prod
             mv .env dist/.env
             aws s3 cp ./dist/ s3://udapeople-${CIRCLE_WORKFLOW_ID}/ --recursive
       - jq/install
@@ -386,6 +386,7 @@ jobs:
             export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
                 --stack-status-filter CREATE_COMPLETE --no-paginate --output text))
             echo "export OldWorkflowID=${OldWorkflowID}" >> $BASH_ENV
+            echo "export STACKS=${STACKS}" >> $BASH_ENV
       - run:
           name: Remove old stacks and files
           command: |

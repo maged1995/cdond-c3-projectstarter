@@ -11,7 +11,7 @@
     "test:cov": "jest --coverage",
     "start": "webpack-dev-server --mode development --hot --progress --color --port 3000 --open",
     "lint": "tslint -p tsconfig.json -c tslint.json",
-    "build:prod": "webpack -p --progress",
+    "build:prod": "webpack --mode production --progress",
     "build": "webpack --mode development --progress",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\""
   },

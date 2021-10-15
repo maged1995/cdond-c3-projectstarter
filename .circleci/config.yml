@@ -255,11 +255,8 @@ jobs:
       - run:
           name: Get backend url
           command: |
-            PRIVATE_IP=($(aws ec2 describe-instances \
-              --query 'Reservations[*].Instances[*].PrivateIpAddress' \
-              --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID}" \
-              --output text))
-            API_URL_STRING="http://${PRIVATE_IP}:3030"
+            BACKEND_IP=$( cat ~/project/.circleci/ansible/inventory.txt | tail -1 )
+            API_URL_STRING="http://${BACKEND_IP}:3030"
             echo "export API_URL=${API_URL_STRING}" >> $BASH_ENV
 
       - run:
@@ -441,5 +438,5 @@ workflows:
           requires: [deploy-backend, deploy-frontend]
       - cloudfront-update:
           requires: [smoke-test]
-      # - cleanup:
-      #     requires: [cloudfront-update]
+      - cleanup:
+          requires: [cloudfront-update]
